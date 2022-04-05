@@ -65,7 +65,7 @@
                             </div>
                             <p>in <a href="{{url_for('show_post', post_url=comment.parent_post.url)}}">{{
                                     comment.parent_post.title }}</a></p>
-                            {% if current_user.id == 1%}
+                            {% if current_user.email == 'ibrahimkocyigit@gmail.com' %}
                             <div class="comment__actions">
                                 <a href="{{url_for('approve_comment', comment_id=comment.id)}}">Approve Comment</a>
                                 <span class="infobox__bar"> | </span>

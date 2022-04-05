@@ -43,7 +43,7 @@
                     </a>
                 </span>
 
-                {% if current_user.id == 1 %}
+                {% if current_user.email == 'ibrahimkocyigit@gmail.com' %}
                 <span class="bar"> | </span>
                 <a href="{{url_for('edit_post', post_id=post.id)}}">Edit Post</a>
                 <span class="bar"> | </span>
@@ -138,7 +138,7 @@
                             <p>
                                 {{ comment.comment | safe}}
                             </p>
-                            {% if current_user.id == 1%}
+                            {% if current_user.email == 'ibrahimkocyigit@gmail.com' %}
                         </div>
 
                         <div class="comment__actions">

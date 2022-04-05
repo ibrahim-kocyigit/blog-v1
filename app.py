@@ -125,7 +125,7 @@ def admin_only(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         try:
-            if current_user.id != 1:
+            if current_user.email != 'ibrahimkocyigit@gmail.com':
                 abort(403)
             return func(*args, **kwargs)
         except AttributeError:
