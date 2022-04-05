@@ -19,7 +19,7 @@ import re
 app = Flask(__name__)
 load_dotenv()
 
-uri = os.getenv("DATABASE_URL")
+uri = os.environ.get("DATABASE_URL")
 if uri and uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
