@@ -14,9 +14,13 @@ from functools import wraps
 from itsdangerous import URLSafeSerializer, BadSignature
 from dotenv import load_dotenv
 import os
-import re
+import sys
+import logging
 
 app = Flask(__name__)
+
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 load_dotenv()
 
 if os.environ.get("DATABASE_URL"):
