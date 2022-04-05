@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<main>
+
+    <div class="container user-action__container">
+
+        <div class="user-action__heading">
+            <h1>Login</h1>
+            <hr>
+            <p>Please enter your email and password.</p>
+        </div>
+
+        <form class="form form--narrow" method="POST" action="" id="register-form" novalidate>
+            <div class="form__errors">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="form__error form__error--lg">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            {{ form.csrf_token}}
+
+            <div class="form__section">
+                <div class="form__text">
+                    {{ form.email.label(class_="label")}}
+                    {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                    <span class="form__error">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form.email(class_="input")}}
+            </div>
+            <div class="form__section">
+                <div class="form__text">
+                    {{ form.password.label(class_="label")}}
+                    {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                    <span class="form__error">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form.password(class_="input")}}
+            </div>
+
+            <div class="form__section">
+                {{ form.submit(class_="button") }}
+            </div>
+        </form>
+
+    </div>
+    </div>
+</main>
+{% endblock %}

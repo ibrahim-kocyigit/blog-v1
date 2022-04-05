@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<main>
+
+    <div class="container user-action__container">
+
+        <div class="user-action__heading">
+            <h1>Register</h1>
+            <hr>
+            <p>Please fill out the form below.</p>
+        </div>
+
+        <form class="form form--narrow" method="POST" action="" id="register-form" novalidate>
+            {{ form.csrf_token}}
+            <div class="form__section">
+                <div class="form__text">
+                    {{ form.name.label(class_="label")}}
+                    {% if form.name.errors %}
+                    {% for error in form.name.errors %}
+                    <span class="form__error">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form.name(class_="input") }}
+            </div>
+            <div class="form__section">
+                <div class="form__text">
+                    {{ form.username.label(class_="label")}}
+                    {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                    <span class="[ form__error ]">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form.username(class_="input") }}
+            </div>
+            <div class="form__section">
+                <div class="form__text">
+                    {{ form.email.label(class_="label")}}
+                    {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                    <span class="[ form__error ]">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form.email(class_="input")}}
+            </div>
+            <div class="form__section">
+                <div class="form__text">
+                    {{ form.password.label(class_="label")}}
+                    {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                    <span class="[ form__error ]">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form.password(class_="input")}}
+            </div>
+            <div class="form__section">
+                <div class="form__text">
+                    {{ form.confirm_password.label(class_="label")}}
+                    {% if form.confirm_password.errors %}
+                    {% for error in form.confirm_password.errors %}
+                    <span class="[ form__error ]">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form.confirm_password(class_="input")}}
+            </div>
+            <div class="form__section">
+                {{ form.submit(class_="button") }}
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="flashbox--full" id="flashbox">
+    {% for message in messages %}
+    <div class="flashbox">
+        <p class="flashbox__message">
+            {{ message }}
+        </p>
+        <i class="fa-solid fa-xmark flashbox__close" id="flashbox-close"></i>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<div>
+    <img class="post__image" src="{{post.img_url}}" alt="{{post.title}}">
+</div>
+
+<main>
+    <div class="container post__container">
+
+        <div class="post__heading">
+
+            <h1 class="post__title">
+                {{ post.title }}
+            </h1>
+            <hr>
+            <p class="post__subtitle">
+                {{ post.subtitle }}
+            </p>
+
+            <div class="infobox">
+                <span class="infobox__date">{{ post.date}}</span>
+                <span class="infobox__bar"> | </span>
+                <span class="infobox__link">
+                    <a href="{{url_for('home', category=post.category)}}">
+                        {{post.category}}
+                    </a>
+                </span>
+
+                {% if current_user.id == 1 %}
+                <span class="bar"> | </span>
+                <a href="{{url_for('edit_post', post_id=post.id)}}">Edit Post</a>
+                <span class="bar"> | </span>
+                <a href="{{url_for('delete_post', post_id=post.id)}}"
+                    onclick="return confirm('Are you sure you want to delete this post?');">Delete Post</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="post__body">
+            <p class="post__body">
+                {{post.body | safe}}
+            </p>
+        </div>
+
+        <!-- <div class="post__share">
+            <a href="mailto:?subject={{post.title}}&amp;body=http://www.ibrahimkocyigit.com/post/{{post.url}}">
+                <i class="fa-solid fa-envelope share__icon"></i>
+            </a>
+            <a href="http://twitter.com/share?&url=http://www.ibrahimkocyigit.com/post/{{post.url}}" target="_blank"
+                rel="noopener">
+                <i class="fa-brands fa-twitter share__icon"></i>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.ibrahimkocyigit.com/post/{{post.url}}"
+                target="_blank" rel="noopener">
+                <i class="fa-brands fa-facebook share__icon"></i>
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=http://www.ibrahimkocyigit.com/post/{{post.url}}"
+                target="_blank" rel="noopener">
+                <i class="fa-brands fa-linkedin share__icon"></i>
+            </a>
+        </div> -->
+
+        {% if current_user.is_authenticated and current_user.type != "Pending" %}
+
+        <div class="container comments__container">
+
+            <div class="comments__heading">
+                <h4>
+                    Add a Comment
+                </h4>
+                <hr>
+            </div>
+            <form class="form form--narrow" method="POST" action="" id="comment-form" novalidate>
+                {{ form.csrf_token}}
+
+                <div class="form__section ">
+
+                    {% if form.comment.errors %}
+                    {% for error in form.comment.errors %}
+                    <span class="form__error">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+
+                    {{ form.comment(class_="textarea") }}
+                </div>
+                <div class="form__section">
+                    {{ form.submit(class_="button button--small") }}
+                </div>
+
+            </form>
+        </div>
+
+        {% endif %}
+        <!-- ...current_user.is_authenticated -->
+
+
+        {% if approved_comments %}
+        <div class="container comments__container">
+            <div class="comments__heading">
+                <h4>
+                    Comments
+                </h4>
+                <hr>
+            </div>
+            {% for comment in approved_comments %}
+            <div>
+                <div class="comment__box">
+
+                    <img class="comment__image" src="{{ comment.author.email | gravatar}}" />
+
+                    <div class="comment__data">
+
+                        <div class="comment__author">
+                            {{ comment.author.name}}
+                            <span class="comment__says"> says:
+                            </span>
+                        </div>
+                        <div class="comment__text">
+                            <p>
+                                {{ comment.comment | safe}}
+                            </p>
+                            {% if current_user.id == 1%}
+                        </div>
+
+                        <div class="comment__actions">
+                            <a href="{{url_for('delete_comment', comment_id=comment.id)}}"
+                                onclick="return confirm('Are you sure you want to delete this comment?')" ;>Delete
+                                Comment</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        {% endif %}
+        <!-- ...there are approved comments -->
+
+
+
+    </div>
+
+</main>
+{% endblock %}

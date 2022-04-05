@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% if title %}
+        <title>{{ title }} | Ibrahim's Blog</title>
+        {% else %}
+        <title>Ibrahim's Blog</title>
+        {% endif %}
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/5538b23953.js" crossorigin="anonymous"></script>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/static/css/blog.css">
+    </head>
+
+    <body>
+        <!------------------- HEADER ------------------->
+        <header>
+            <nav class="nav container">
+                <div class="nav__logo">
+                    <a href="{{url_for('home')}}">
+                        Ibrahim's<span>Blog</span>
+                    </a>
+                </div>
+                <div class="nav__menu">
+                    <ul class="nav__list">
+                        <li class="nav__item">
+                            <a class="nav__link" href="{{url_for('home')}}">
+                                Home
+                            </a>
+                        </li>
+                        {% if current_user.id == 1 %}
+                        <li class="nav__item">
+                            <a class="nav__link" href="{{url_for('admin')}}">
+                                Admin
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if not current_user.is_authenticated%}
+                        <li class="nav__item">
+                            <a class="nav__link" href="{{url_for('register')}}">
+                                Register
+                            </a>
+                        </li>
+                        <li class="nav__item">
+                            <a class="nav__link" href="{{url_for('login')}}">
+                                Login
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if current_user.is_authenticated %}
+                        <li class="nav__item">
+                            <a class="[ nav__link ]" href="{{url_for('logout')}}">
+                                Logout
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <div class="nav__toggle">
+                        <span class="nav__toggle-bar"></span>
+                        <span class="nav__toggle-bar"></span>
+                        <span class="nav__toggle-bar"></span>
+                    </div>
+
+                </div>
+            </nav>
+
+        </header>
+
+        {% block content %}
+        {% endblock %}
+
+        <footer>
+            <div class="footer container">
+
+                <div>
+                    <p class="footer__logo">Ibrahim<span class="footer__title--tail">Kocyigit</span></p>
+                    <p class="footer__titre">Full Stack Developer</p>
+                </div>
+
+                <div>
+                    <!-- <a href="https://www.linkedin.com/in/ibrahim-kocyigit/" target="_blank" class="footer__social">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a> -->
+                    <a href="https://github.com/ibrahim-kocyigit" target="_blank">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="https://twitter.com/IbrahimKocyigit" target="_blank">
+                        <i class="fa-brands fa-twitter"></i>
+                    </a>
+                </div>
+
+                <p class="footer__copyright">&#169 {{ year }} Ibrahim Kocyigit.</p>
+
+            </div>
+        </footer>
+
+        <!--================ Main JS ================-->
+        <script src="/static/js/blog.js"></script>
+
+    </body>
+
+</html>

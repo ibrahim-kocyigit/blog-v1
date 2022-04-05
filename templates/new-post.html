@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+
+    <div class="container user-action__container">
+
+        {% if title == "Add New Post" %}
+        <div class="user-action__heading">
+            <h1>New Post</h1>
+            <hr>
+            <p>Please fill out the fields below.</p>
+        </div>
+        {% endif %}
+
+        {% if title == "Edit Post" %}
+        <div class="user-action__heading">
+            <h1>Edit Post</h1>
+            <hr>
+            <p>Please edit the fields you'd like.</p>
+        </div>
+        {% endif %}
+
+
+        <form class="form" method="POST" action="" id="new-post-form" novalidate>
+            {{ form.csrf_token}}
+            <div class="form__section">
+                <div class="form__text">
+                    {{ form.title.label(class_="label")}}
+                    {% if form.title.errors %}
+                    {% for error in form.title.errors %}
+                    <span class="form__error">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form.title(class_="input") }}
+            </div>
+
+            <div class="form__section">
+                <div class="form__text">
+                    {{ form.url.label(class_="label")}}
+                    {% if form.url.errors %}
+                    {% for error in form.url.errors %}
+                    <span class="form__error">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form.url(class_="input") }}
+            </div>
+
+            <div class="form__section">
+                <div class="form__text">
+                    {{ form.subtitle.label(class_="label")}}
+                    {% if form.subtitle.errors %}
+                    {% for error in form.subtitle.errors %}
+                    <span class="form__error">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form.subtitle(class_="input") }}
+            </div>
+
+            <div class="form__section">
+                <div class="form__text">
+                    {{ ckeditor.load() }}
+                    {{ ckeditor.config(name='body') }}
+                    {{ form.body.label(class_="label")}}
+                    {% if form.body.errors %}
+                    {% for error in form.body.errors %}
+                    <span class="form__error">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form.body(class_="input") }}
+            </div>
+
+            <div class="form__section">
+                <div class="form__text">
+                    {{ form.category.label(class_="label")}}
+                    {% if form.category.errors %}
+                    {% for error in form.category.errors %}
+                    <span class="form__error">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form.category(class_="input") }}
+            </div>
+
+            <div class="form__section">
+                <div class="form__text">
+                    {{ form.img_url.label(class_="label")}}
+                    {% if form.img_url.errors %}
+                    {% for error in form.img_url.errors %}
+                    <span class="form__error">
+                        *{{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form.img_url(class_="input") }}
+            </div>
+
+            <div class="form__section">
+                {{ form.submit(class_="button") }}
+            </div>
+        </form>
+
+    </div>
+</main>
+{% endblock %}

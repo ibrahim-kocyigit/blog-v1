@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div id="flashbox">
+    {% for message in messages %}
+    <div class="flashbox">
+        <p class="flashbox__message">
+            {{ message }}
+        </p>
+        <i class="fa-solid fa-xmark flashbox__close" id="flashbox-close"></i>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<main>
+    <div class="container grid main__container">
+        {% if category %}
+        <div class="section__titlebox">
+            <h2 class="section__title">
+                {{ category }}
+            </h2>
+        </div>
+
+        {% endif %}
+
+        <!-- If we have at least 4 posts, we'll have a hero+subhero layout -->
+
+        {% if requested_posts | length >= 4 %}
+
+        {% with hero_post = requested_posts[0] %}
+        <div class="grid postcard postcard--hero">
+            <a href="{{url_for('show_post', post_url=hero_post.url)}}">
+                <img class="postcard__image postcard__image--hero" src="{{hero_post.img_url}}"
+                    alt="{{hero_post.title}}">
+            </a>
+            <div class="grid postcard__data postcard__data--hero">
+                <h1 class="postcard__title postcard__title--hero">
+                    <a href="{{url_for('show_post', post_url=hero_post.url)}}">
+                        {{ hero_post.title}}
+                    </a>
+                </h1>
+                <p class="postcard__description postcard__description--hero">
+                    <a href="{{url_for('show_post', post_url=hero_post.url)}}">
+                        {{ hero_post.subtitle}}
+                    </a>
+                </p>
+                <div class="infobox">
+                    <span class="infobox__date">{{ hero_post.date}}</span>
+                    <span class="infobax__bar"> | </span>
+                    <span>
+                        <a class="infobox__link" href="{{url_for('home', category=hero_post.category)}}">
+                            {{hero_post.category}}
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endwith %}
+
+        {% for post in requested_posts[1:4] %}
+
+        <div class="grid postcard postcard--subhero">
+            <a href="{{url_for('show_post', post_url=post.url)}}">
+                <img class="postcard__image" src="{{post.img_url}}" alt="{{post.title}}">
+            </a>
+            <div class="grid postcard__data postcard__data--subhero">
+                <h2 class="postcard__title postcard__title--subhero">
+                    <a href="{{url_for('show_post', post_url=post.url)}}">
+                        {{ post.title}}
+                    </a>
+                </h2>
+                <p class="postcard__description postcard__description--subhero">
+                    <a href="{{url_for('show_post', post_url=post.url)}}">
+                        {{ post.subtitle}}
+                    </a>
+                </p>
+                <div class="infobox">
+                    <span class="infobox__date">{{ post.date}}</span>
+                    <span class="infobax__bar"> | </span>
+                    <span>
+                        <a class="infobox__link" href="{{url_for('home', category=post.category)}}">
+                            {{post.category}}
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if requested_posts | length >= 5 %}
+
+        <div class="section__titlebox">
+            <h2 class="section__title">More Posts</h2>
+        </div>
+
+        {% for post in requested_posts[4:] %}
+        <div class="grid postcard">
+            <a href="{{url_for('show_post', post_url=post.url)}}">
+                <img class="postcard__image" src="{{post.img_url}}" alt="{{post.title}}">
+            </a>
+            <div class="grid postcard__data">
+                <h4 class="postcard__title">
+                    <a href="{{url_for('show_post', post_url=post.url)}}">
+                        {{ post.title}}
+                    </a>
+                </h4>
+                <p class="postcard__description postcard__description--show-hide">
+                    <a href="{{url_for('show_post', post_url=post.url)}}">
+                        {{ post.subtitle}}
+                    </a>
+                </p>
+                <div class="infobox">
+                    <span class="infobox__date">{{ post.date}}</span>
+                    <span class="infobax__bar"> | </span>
+                    <span>
+                        <a class="infobox__link" href="{{url_for('home', category=post.category)}}">
+                            {{post.category}}
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+        {% endif %}
+
+
+        <!-- If we have less than 4 posts, we'll have a list layout -->
+        {% else %}
+
+        {% for post in requested_posts %}
+        <div class="grid postcard">
+            <a href="{{url_for('show_post', post_url=post.url)}}">
+                <img class="postcard__image" src="{{post.img_url}}" alt="{{post.title}}">
+            </a>
+            <div class="grid postcard__data">
+                <h4 class="postcard__title">
+                    <a href="{{url_for('show_post', post_url=post.url)}}">
+                        {{ post.title}}
+                    </a>
+                </h4>
+                <p class="postcard__description postcard__description--show-hide">
+                    <a href="{{url_for('show_post', post_url=post.url)}}">
+                        {{ post.subtitle}}
+                    </a>
+                </p>
+                <div class="infobox">
+                    <span class="infobox__date">{{ post.date}}</span>
+                    <span class="infobax__bar"> | </span>
+                    <span>
+                        <a class="infobox__link" href="{{url_for('home', category=post.category)}}">
+                            {{post.category}}
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+        {% endif %}
+    </div>
+</main>
+
+{% endblock %}

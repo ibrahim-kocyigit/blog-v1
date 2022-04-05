@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+<main>
+    <div class="container user-action__container">
+        <div class="user-action__heading">
+            <h1>
+                Welcome, Admin
+            </h1>
+            <hr>
+            <p>May the Force with you!</p>
+        </div>
+
+        <div class="section">
+
+            <div class="section__titlebox">
+                <h2>Posts</h2>
+            </div>
+            <div class="section__content">
+                <i class="fa-solid fa-pencil section__icon"></i>
+                <a class="section__link" href="{{url_for('new_post')}}">
+                    Create New Post
+                </a>
+            </div>
+
+        </div>
+
+        <div class="section">
+            <div class="section__titlebox">
+                <h2>Comments</h2>
+            </div>
+
+            {% if unapproved_comments == [] %}
+            <div class="section__content">
+                <i class="fa-solid fa-comments section__icon"></i>
+                There are no comments to review.
+            </div>
+            {% endif %}
+
+            {% if unapproved_comments != [] %}
+
+            <div class="section__content">
+                <i class="fa-solid fa-comments section__icon"></i>
+                There are some comments waiting for you to review:
+            </div>
+
+            <div class="container comments__container">
+
+                {% for comment in unapproved_comments %}
+                <div>
+                    <div class="comment__box">
+
+                        <img class="comment__image" src="{{ comment.author.email | gravatar}}" />
+
+                        <div class="comment__data">
+
+                            <div class="comment__author">
+                                {{ comment.author.name}}
+                                <span class="comment__says"> says:
+                                </span>
+                            </div>
+                            <div class="comment__text">
+                                <p>
+                                    {{ comment.comment | safe}}
+                                </p>
+                            </div>
+                            <p>in <a href="{{url_for('show_post', post_url=comment.parent_post.url)}}">{{
+                                    comment.parent_post.title }}</a></p>
+                            {% if current_user.id == 1%}
+                            <div class="comment__actions">
+                                <a href="{{url_for('approve_comment', comment_id=comment.id)}}">Approve Comment</a>
+                                <span class="infobox__bar"> | </span>
+                                <a href="{{url_for('delete_comment', comment_id=comment.id)}}"
+                                    onclick="return confirm('Are you sure you want to delete this comment?')" ;>Delete
+                                    Comment</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="section">
+
+            <div class="section__titlebox">
+                <h2>Users</h2>
+            </div>
+            <div class="section__content">
+                <i class="fa-solid fa-user section__icon"></i>
+                Under construction.
+
+            </div>
+
+        </div>
+
+    </div>
+</main>
+
+{% endblock %}
