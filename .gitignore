@@ -289,3 +289,4 @@ Temporary Items
 # End of https://www.toptal.com/developers/gitignore/api/flask,python,visualstudiocode,macos
 blog_032622.db
 todos.txt
+migrations
